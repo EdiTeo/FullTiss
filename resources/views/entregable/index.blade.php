@@ -1,72 +1,77 @@
-<x-app-layout>
+@extends('adminlte::page')
+
+@section('title', 'Entregables')
+
+@section('content_header')
+    <h1>Entregables</h1>
+@stop
+
+@section('content')
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Entregables') }}
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-full mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="w-full">
-                    <div class="sm:flex sm:items-center">
-                        <div class="sm:flex-auto">
-                            <h1 class="text-base font-semibold leading-6 text-gray-900">{{ __('Entregables') }}</h1>
-                            <p class="mt-2 text-sm text-gray-700">A list of all the {{ __('Entregables') }}.</p>
-                        </div>
-                        <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                            <a type="button" href="{{ route('entregables.create') }}" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add new</a>
-                        </div>
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4 class="mb-0">{{ __('Entregables') }}</h4>
+                        <p class="text-muted">Lista de todos los entregables {{ __('Entregables') }}.</p>
                     </div>
-
-                    <div class="flow-root">
-                        <div class="mt-8 overflow-x-auto">
-                            <div class="inline-block min-w-full py-2 align-middle">
-                                <table class="w-full divide-y divide-gray-300">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">No</th>
-                                        
-									<th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Docente Id</th>
-									<th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Nombre</th>
-									<th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Descripcion</th>
-									<th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Peso</th>
-
-                                        <th scope="col" class="px-3 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500"></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody class="divide-y divide-gray-200 bg-white">
-                                    @foreach ($entregables as $entregable)
-                                        <tr class="even:bg-gray-50">
-                                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-semibold text-gray-900">{{ ++$i }}</td>
-                                            
-										<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $entregable->docente_id }}</td>
-										<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $entregable->nombre }}</td>
-										<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $entregable->descripcion }}</td>
-										<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $entregable->peso }}</td>
-
-                                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900">
-                                                <form action="{{ route('entregables.destroy', $entregable->id) }}" method="POST">
-                                                    <a href="{{ route('entregables.show', $entregable->id) }}" class="text-gray-600 font-bold hover:text-gray-900 mr-2">{{ __('Show') }}</a>
-                                                    <a href="{{ route('entregables.edit', $entregable->id) }}" class="text-indigo-600 font-bold hover:text-indigo-900  mr-2">{{ __('Edit') }}</a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <a href="{{ route('entregables.destroy', $entregable->id) }}" class="text-red-600 font-bold hover:text-red-900" onclick="event.preventDefault(); confirm('Are you sure to delete?') ? this.closest('form').submit() : false;">{{ __('Delete') }}</a>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
-
-                                <div class="mt-4 px-4">
-                                    {!! $entregables->withQueryString()->links() !!}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <a href="{{ route('entregables.create') }}" class="btn btn-primary">Agregar Nuevo</a>
+                </div>
+            </div>
+            
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                        <thead class="thead-gray">
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">Docente Id</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Descripción</th>
+                                <th scope="col">Peso</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($entregables as $entregable)
+                                <tr>
+                                    <td>{{ ++$i }}</td>
+                                    <td>{{ $entregable->docente_id }}</td>
+                                    <td>{{ $entregable->nombre }}</td>
+                                    <td>{{ $entregable->descripcion }}</td>
+                                    <td>{{ $entregable->peso }}</td>
+                                    <td>
+                                        <a href="{{ route('entregables.show', $entregable->id) }}" class="btn btn-info btn-sm mr-2">{{ __('Mostrar') }}</a>
+                                        <a href="{{ route('entregables.edit', $entregable->id) }}" class="btn btn-warning btn-sm mr-2">{{ __('Editar') }}</a>
+                                        <form action="{{ route('entregables.destroy', $entregable->id) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure to delete?')">{{ __('Eliminar') }}</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-center mt-3">
+                    {!! $entregables->withQueryString()->links() !!}
                 </div>
             </div>
         </div>
     </div>
-</x-app-layout>
+@stop
+
+@section('css')
+    {{-- Puedes añadir estilos personalizados aquí --}}
+@stop
+
+@section('js')
+    <script> console.log("Usando el paquete Laravel-AdminLTE"); </script>
+@stop

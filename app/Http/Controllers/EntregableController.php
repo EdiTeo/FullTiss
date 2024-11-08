@@ -65,9 +65,10 @@ class EntregableController extends Controller
      */
     public function edit($id): View
     {
-        $entregable = Entregable::find($id);
+        $entregable = Entregable::findOrFail($id);
+        $docente = Auth::user(); // Obtener el docente autenticado
 
-        return view('entregable.edit', compact('entregable'));
+        return view('entregable.edit', compact('entregable', 'docente'));
     }
 
     /**
