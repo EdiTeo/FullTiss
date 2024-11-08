@@ -11,16 +11,13 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header d-flex justify-content-between align-items-center">
                         <h3 class="card-title">Añadir un nuevo Entregable</h3>
-                        <div class="card-tools">
-                            <a type="button" href="{{ route('entregables.index') }}" class="btn btn-primary btn-sm">Volver</a>
-                        </div>
+                        <a href="{{ route('entregables.index') }}" class="btn btn-danger float-end">Volver</a>
                     </div>
                     <div class="card-body">
                         <form method="POST" action="{{ route('entregables.store') }}" role="form" enctype="multipart/form-data">
                             @csrf
-
                             @include('entregable.form')
                         </form>
                     </div>
@@ -28,4 +25,12 @@
             </div>
         </div>
     </div>
+@stop
+
+@section('css')
+    {{-- Aquí puedes añadir tus estilos personalizados --}}
+@stop
+
+@section('js')
+    <script> console.log("Formulario de creación de entregable cargado"); </script>
 @stop
