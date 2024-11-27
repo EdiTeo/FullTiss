@@ -1,0 +1,24 @@
+{
+    "rubrica": {
+        "titulo": "Título de la rúbrica",
+        "criterios": [
+            {
+                "titulo_criterio": "Criterio 1",
+                "peso": 50,
+                "descripcion": "Descripción del criterio",
+                "niveles": [
+                    {
+                        "nombre_nivel": "Nivel 1",
+                        "puntuacion": 5,
+                        "descripcion": "Descripción del nivel 1"
+                    },
+                    {
+                        "nombre_nivel": "Nivel 2",
+                        "puntuacion": 8,
+                        "descripcion": "Descripción del nivel 2"
+                    }
+                ]
+            }
+        ]
+    }
+}
