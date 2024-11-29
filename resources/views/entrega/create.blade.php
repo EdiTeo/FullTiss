@@ -17,7 +17,7 @@
                             <p class="mt-2 text-sm text-gray-700">Añadir una nueva entrega.</p>
                         </div>
                         <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                            <a type="button" href="{{ route('entregas.index') }}" class="btn btn-danger">Volver</a>
+                            <a type="button" href="{{ route('entregas.index') }}" class="btn btn-danger">Volver</a> 
                         </div>
                     </div>
 
