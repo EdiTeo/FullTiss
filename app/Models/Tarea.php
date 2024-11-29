@@ -59,6 +59,10 @@ class Tarea extends Model
     {
         return $this->hasMany(Rubrica::class);
     }
+    public function entregas()
+    {
+        return $this->hasMany(Entrega::class);
+    }
 
 }
 
