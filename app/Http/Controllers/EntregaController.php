@@ -33,23 +33,47 @@ class EntregaController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request): View
+    public function create(Request $request): View|RedirectResponse
     {
         $tarea_id = $request->input('tarea_id');
-        $entrega = new Entrega();
         $user = Auth::user(); // Obtener el usuario autenticado
-        $tarea = Tarea::find($tarea_id); // Obtener la información de la tarea
+        if ($this->hasSubmittedTask($tarea_id)) {
+            return Redirect::back()->with('warning', 'Ya has entregado esta tarea.');
+        }
+        $entrega = new Entrega();
+         
+        $tarea = Tarea::find($tarea_id); //Obtener la información de la tarea
     
         // Buscar el grupo al que pertenece el usuario
         $grupo = Grupo::whereHas('usuarios', function ($query) use ($user) {
             $query->where('user_id', $user->id);
         })->first();
-    
+        
         return view('entrega.create', compact('entrega', 'tarea', 'user', 'grupo'));
     }
-    
-    
+    /**
+     * Verifica que un estudiante solo entregue una tarea y no varias veces la misma tarea
+     */
+    public function hasSubmittedTask($tareaId): bool
+    {
+        $user = Auth::user();
 
+        //Obtener el grupo del usuario autenticado
+        $grupo = Grupo::whereHas('usuarios', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })->first();
+
+        //Si el usuario no pertenece a un grupo, permitir la entrega
+        if (!$grupo) {
+            return false;
+        }
+
+        //Verificar si el grupo ya entregó esta tarea
+        return Entrega::where('grupo_id', $grupo->id)
+                    ->where('tarea_id', $tareaId)
+                    ->exists();
+    }
+    
     /**
      * Store a newly created resource in storage.
      */
