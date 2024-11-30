@@ -38,6 +38,7 @@
                                     @endforeach
                                 </div>
                             </div>
+                             <!--
                             <div class="mb-3">
                                 <label for="solvencia_tecnica" class="form-label">Solvencia Técnica (PDF)</label>
                                 <input type="file" name="solvencia_tecnica" required class="form-control">
@@ -46,6 +47,7 @@
                                 <label for="boleta_garantia" class="form-label">Boleta de Garantía (PDF)</label>
                                 <input type="file" name="boleta_garantia" required class="form-control">
                             </div>
+                            -->
                             <button type="submit" class="btn btn-primary mt-3">
                                 Crear Grupo
                             </button>
