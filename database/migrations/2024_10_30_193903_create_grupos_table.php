@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('nombre');
             $table->text('descripcion')->nullable();
             $table->boolean('estado')->default(false); // Estado por defecto es false
-            $table->string('solvencia_tecnica')->nullable(); // Ruta del PDF
-            $table->string('boleta_garantia')->nullable(); // Ruta del PDF
+           // $table->string('solvencia_tecnica')->nullable(); // Ruta del PDF
+           // $table->string('boleta_garantia')->nullable(); // Ruta del PDF
             $table->timestamps();
         });
 
