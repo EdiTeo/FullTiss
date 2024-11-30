@@ -14,8 +14,8 @@ class Grupo extends Model
         'docente_id', // Añade esta línea
         'nombre',
         'descripcion',
-        'solvencia_tecnica',
-        'boleta_garantia',
+        //'solvencia_tecnica',
+        //'boleta_garantia',
         'estado',
     ];
 
