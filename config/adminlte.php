@@ -403,7 +403,12 @@ return [
             'icon' => 'fas fa-fw fa-lock',
             'can' => 'view-proyecto',
         ],
-
+        [
+            'text' => 'Seguimiento Semanal',
+            'url' => 'seguimientos',
+            'icon' => 'fas fa-fw fa-lock',
+            'can' => 'view-proyecto',
+        ],
         ['header' => 'labels'],
         [
             'text' => 'important',
