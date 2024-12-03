@@ -11,7 +11,9 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\QualificationController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SprintController;
+use App\Http\Controllers\SprintareaController;
 use App\Http\Controllers\TareaController;
+use App\Http\Controllers\ProductBacklogController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ViewcompController;
 use Illuminate\Support\Facades\Route;
@@ -67,6 +69,21 @@ Route::middleware([
     Route::patch('/grupos/{id}/update-status', [GrupoController::class, 'updateStatus'])->name('grupos.updateStatus');
     
     Route::resource('sprints', SprintController::class);
+
+Route::get('/product-backlog', [ProductBacklogController::class, 'index'])->name('product-backlog.index');
+
+Route::resource('sprintarea', SprintareaController::class)
+    ->except(['show'])
+    ->names([
+        'index' => 'sprintarea.index',
+        'create' => 'sprintarea.create',
+        'store' => 'sprintarea.store',
+        'edit' => 'sprintarea.edit',
+        'update' => 'sprintarea.update',
+        'destroy' => 'sprintarea.destroy',
+    ]);
+    Route::get('/sprints/assign', [SprintController::class, 'assign'])->name('sprints.assign');
+
 
     Route::resource('entregables', EntregableController::class);
     Route::resource('tareas', TareaController::class);
