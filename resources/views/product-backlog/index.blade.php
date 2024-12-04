@@ -11,7 +11,7 @@
     <!-- Card para las tareas -->
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h3 class="mb-0">Lista de Tareas</h3>
+            <h3 class="mb-0">Lista de ítems</h3>
             <div>
                 <!-- Botón para ver sprints -->
                 <a href="{{ route('sprints.index') }}" class="btn btn-success" style="margin-right: 60px;">
