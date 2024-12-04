@@ -10,7 +10,9 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Calificar Entregable</h3>
+                <h2 class="card-title">Calificar Entregable</h2>
+                 <!-- Botón Cancelar -->
+                 <a href="javascript:history.back()" class="btn btn-danger ms-auto" style="margin-left: 400px;">Cancelar</a>
             </div>
             <div class="card-body">
                 <form action="{{ route('qualifications.store') }}" method="POST">
@@ -52,6 +54,8 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary">Guardar Calificación</button>
+                     <!-- Botón Cancelar -->
+                     {{-- <a href="javascript:history.back()" class="btn btn-danger ms-auto" style="margin-left: 200px;">Cancelar</a> --}}
                 </form>
             </div>
         </div>

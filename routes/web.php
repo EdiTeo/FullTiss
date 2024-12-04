@@ -16,6 +16,7 @@ use App\Http\Controllers\TareaController;
 use App\Http\Controllers\ProductBacklogController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ViewcompController;
+use App\Http\Controllers\AsistenciaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SeguimientoController;
 Route::get('/', function () {
@@ -126,3 +127,9 @@ Route::resource('seguimientos', SeguimientoController::class);
 Route::post('/seguimientos', [SeguimientoController::class, 'store'])->name('seguimientos.store');
 Route::get('/seguimientos/{seguimientos}/edit', [SeguimientoController::class, 'edit'])->name('seguimientos.edit');
 Route::put('/seguimientos/{seguimiento}', [SeguimientoController::class, 'update'])->name('seguimientos.update');
+
+///para la Asistencia::
+Route::get('/grupos/{grupoId}/asistencias/registrar', [AsistenciaController::class, 'formRegistrarAsistencia'])->name('asistencias.registrar');
+Route::post('/grupos/{grupoId}/asistencias', [AsistenciaController::class, 'registrarAsistencia'])->name('asistencias.guardar');
+Route::get('/grupos/{grupoId}/asistencias', [AsistenciaController::class, 'listaAsistencia'])->name('asistencias.lista');
+Route::get('grupos/{grupoId}/calificaciones', [AsistenciaController::class, 'listaAsistencia'])->name('grupos.verCalificaciones');

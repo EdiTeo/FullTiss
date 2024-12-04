@@ -9,10 +9,12 @@
 @section('content')
     <div class="container">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
                 <h3 class="card-title">Lista de Entregas</h3>
+                 <!-- Botón Cancelar -->
+                 <a href="javascript:history.back()" class="btn btn-danger">Atrás</a>
             </div>
-            <div class="card-body">
+            <div class="table-responsive">
                 <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
