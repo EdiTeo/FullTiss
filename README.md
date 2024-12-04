@@ -19,6 +19,7 @@ Sistema desarrollado en **Laravel** para gestionar entregas de estudiantes, spri
 1. [Requisitos](#requisitos)
 2. [Instalación](#instalación)
 3. [Estructura del Proyecto](#estructura-del-proyecto)
+4. [Tecnologias Utilizadas](#Tecnologías-Utilizadas)
 
 
 ## Requisitos
@@ -175,7 +176,7 @@ Sistema desarrollado en **Laravel** para gestionar entregas de estudiantes, spri
     ├── tailwind.config.js
     └── vite.config.js
 
-## TECNOLOGIA UTILIZADAS
+ 
 ### Tecnologías Utilizadas
 * Backend
 * Lenguje: PHP 8.x
