@@ -8,9 +8,7 @@ Sistema desarrollado en **Laravel** para gestionar entregas de estudiantes, spri
 - **Gestión de entregas**: Los estudiantes entregan tareas organizadas y a tiempo.
 - **Gestión de sprints**: Los equipos gestionan tareas dentro de un marco ágil.
 - **Calificación y evaluación**: Docentes califican las entregas con un sistema de rubricas.
-
-Este sistema optimiza la gestión académica de software, facilitando la organización, asignación y evaluación de tareas.
-
+ 
 ## Características
 - **Gestión de usuarios**: Estudiantes, docentes y administradores con acceso a funciones específicas.
 - **Asignación de tareas**: Creación de tareas con fechas de entrega.
