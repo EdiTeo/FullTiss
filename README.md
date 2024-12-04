@@ -1,26 +1,21 @@
 
 # FullTiss
-Este sistema está desarrollado en **Laravel**, con el objetivo de gestionar las entregas de los estudiantes, los sprints de los equipos de trabajo y la calificación de los proyectos en el contexto de un Taller de Ingeniería de Software.
 
-El proyecto forma parte de la solución integral para la convocatoria pública **CPTIS-0893-2024**, realizada por la empresa **TIS**. El sistema permite una gestión eficiente de los procesos relacionados con la asignación de tareas, seguimiento de entregas y evaluación de los estudiantes, facilitando la organización y comunicación dentro del entorno académico.
+## Descripción
+Sistema desarrollado en **Laravel** para gestionar entregas de estudiantes, sprints de equipos y la calificación de proyectos en un Taller de Ingeniería de Software. Forma parte de la convocatoria pública **CPTIS-0893-2024** de la empresa **BORCELLE**.
 
-### Propósito
-El propósito principal del sistema es optimizar el proceso de gestión de entregas y calificaciones dentro de un entorno académico de desarrollo de software. Esto incluye las siguientes características principales:
-- **Gestión de entregas**: Permite a los estudiantes entregar sus tareas de forma organizada y a tiempo.
-- **Gestión de sprints**: Los equipos pueden gestionar sus tareas y asignaciones dentro de un marco ágil de desarrollo.
-- **Calificación y evaluación**: Los docentes pueden calificar las entregas y gestionar las evaluaciones de los estudiantes a través de un sistema de rubricas.
+### Características principales:
+- **Gestión de entregas**: Los estudiantes entregan tareas organizadas y a tiempo.
+- **Gestión de sprints**: Los equipos gestionan tareas dentro de un marco ágil.
+- **Calificación y evaluación**: Docentes califican las entregas con un sistema de rubricas.
 
-### Objetivos
-Este sistema responde a la necesidad de la empresa TIS para la mejora de los procesos de desarrollo de software en los contextos académicos. Se busca facilitar el trabajo de consultores y empresas en cuanto a la gestión de equipos y el seguimiento de proyectos de software.
+Este sistema optimiza la gestión académica de software, facilitando la organización, asignación y evaluación de tareas.
 
 ## Características
-
-- **Gestión de usuarios**: Los usuarios pueden ser estudiantes, docentes o administradores, y cada uno tiene acceso a funciones específicas.
-- **Asignación de tareas**: Los administradores y docentes pueden asignar tareas específicas a los estudiantes y establecer fechas de entrega.
-- **Seguimiento de entregas**: Los estudiantes pueden realizar un seguimiento de sus entregas, mientras que los docentes pueden ver el progreso y calificar.
-- **Sprints y Scrum**: El sistema permite la organización de tareas en sprints, facilitando el seguimiento de proyectos ágiles.
-- **Rubricas de evaluación**: Se pueden crear rubricas para evaluar las entregas de los estudiantes en función de diferentes criterios.
-
+- **Gestión de usuarios**: Estudiantes, docentes y administradores con acceso a funciones específicas.
+- **Asignación de tareas**: Creación de tareas con fechas de entrega.
+- **Sprints y Scrum**: Organización de tareas en sprints.
+- **Rubricas de evaluación**: Evaluación de entregas basada en rubricas.
 
 ## Tabla de Contenidos
 1. [Requisitos](#requisitos)
