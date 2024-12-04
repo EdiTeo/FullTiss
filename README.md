@@ -1,3 +1,4 @@
+
 # FullTiss
 
 Sistema desarrollado en Laravel para la gestión de entregas, sprints y calificaciones. Este proyecto es parte de la solución para [descripción del problema].
