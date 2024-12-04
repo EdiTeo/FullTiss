@@ -41,7 +41,7 @@
                 </thead>
                 <tbody>
                     @forelse($tareas as $tarea)
-                        <tr>
+                        <tr> 
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $tarea->nombre }}</td>
                             <td>{{ $tarea->prioridad }}</td>
@@ -59,7 +59,7 @@
                                     <button type="submit" class="btn btn-danger btn-sm">
                                         <i class="fas fa-trash"></i> Eliminar
                                     </button>
-                                </form>
+                                </form>                                
                                 <!-- Botón para asignar a sprint CORREGIR ESTO Y ESTADOS  -->
                                 {{-- <a href="{{ route('sprints.assign', $tarea->id) }}" class="btn btn-info btn-sm">
                                     <i class="fas fa-tasks"></i> Asignar a Sprint

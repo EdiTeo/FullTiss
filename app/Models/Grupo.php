@@ -42,5 +42,10 @@ class Grupo extends Model
     {
         return $this->hasMany(Seguimiento::class);
     }
+    public function sprints()
+{
+    return $this->hasMany(Sprint::class);
+}
+
 
 }
