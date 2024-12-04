@@ -79,10 +79,12 @@ Route::resource('sprintarea', SprintareaController::class)
         'create' => 'sprintarea.create',
         'store' => 'sprintarea.store',
         'edit' => 'sprintarea.edit',
-        'update' => 'sprintarea.update',
+        
         'destroy' => 'sprintarea.destroy',
     ]);
     Route::get('/sprints/assign', [SprintController::class, 'assign'])->name('sprints.assign');
+    Route::delete('/sprintarea/{id}', [SprintareaController::class, 'destroy'])->name('sprintarea.destroy');
+    Route::put('/sprintarea/{id}', [SprintAreaController::class, 'update'])->name('sprintarea.update');
 
 
     Route::resource('entregables', EntregableController::class);
