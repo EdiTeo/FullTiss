@@ -7,55 +7,60 @@
 @stop
 
 @section('content')
-    <div class="container">
-        <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h1>Sprints</h1>
-                <a type="button" href="{{ route('sprints.create') }}" class="btn btn-primary">Add new</a>
-            </div>
-            <div class="card-body">
-                @if ($sprints->count())
-                    <table class="table table-bordered table-hover">
-                        <thead>
+<div class="container">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h3 class="mb-0">Lista de Sprints</h3>
+            <a href="{{ route('sprints.create') }}" class="btn btn-primary">
+                <i class="fas fa-plus-circle"></i> Crear Nuevo Sprint
+            </a>
+            <a href="{{ route('product-backlog.index') }}" class="btn btn-danger float-end">Volver</a>
+        </div>
+        <div class="card-body">
+            @if($sprints->isEmpty())
+                <div class="alert alert-warning" role="alert">
+                    No hay sprints registrados. <a href="{{ route('sprints.create') }}" class="alert-link">Crea uno ahora</a>.
+                </div>
+            @else
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Fecha de Inicio</th>
+                            <th>Fecha de Fin</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($sprints as $sprint)
                             <tr>
-                                <th>No</th>
-                                <th>Nombre</th>
-                                <th>Fecha Inicio</th>
-                                <th>Fecha Fin</th>
-                                <th>Grupo Id</th>
-                                <th>User Id</th>
-                                <th>Acciones</th>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $sprint->nombre }}</td>
+                                <td>{{ $sprint->fecha_inicio }}</td>
+                                <td>{{ $sprint->fecha_fin}}</td>
+                                <td>
+                                    <a href="{{ route('sprints.show', $sprint) }}" class="btn btn-info btn-sm">
+                                        <i class="fas fa-eye"></i> Ver
+                                    </a>
+                                    <a href="{{ route('sprints.edit', $sprint) }}" class="btn btn-warning btn-sm">
+                                        <i class="fas fa-edit"></i> Editar
+                                    </a>
+                                    <form action="{{ route('sprints.destroy', $sprint) }}" method="POST" class="d-inline-block">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash"></i> Eliminar
+                                        </button>
+                                    </form>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($sprints as $sprint)
-                                <tr>
-                                    <td>{{ ++$i }}</td>
-                                    <td>{{ $sprint->nombre }}</td>
-                                    <td>{{ $sprint->fecha_inicio }}</td>
-                                    <td>{{ $sprint->fecha_fin }}</td>
-                                    <td>{{ $sprint->grupo_id }}</td>
-                                    <td>{{ $sprint->user_id }}</td>
-                                    <td>
-                                        <form action="{{ route('sprints.destroy', $sprint->id) }}" method="POST">
-                                            <a href="{{ route('sprints.show', $sprint->id) }}" class="btn btn-info btn-sm">Show</a>
-                                            <a href="{{ route('sprints.edit', $sprint->id) }}" class="btn btn-primary btn-sm">Edit</a>
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure to delete?')">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                    <div class="mt-4">
-                        {!! $sprints->withQueryString()->links() !!}
-                    </div>
-                @else
-                    <p>No hay sprints disponibles para tu grupo.</p>
-                @endif
-            </div>
+                        @endforeach
+                    </tbody>
+                    
+                </table>
+            @endif
         </div>
     </div>
+</div>
 @stop

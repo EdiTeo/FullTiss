@@ -49,5 +49,10 @@ class Sprint extends Model
     {
         return $this->belongsTo(\App\Models\User::class, 'user_id', 'id');
     }
+    public function tareas()
+    {
+        return $this->hasMany(Sprintarea::class);
+    }
+    
     
 }

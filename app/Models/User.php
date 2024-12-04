@@ -92,5 +92,9 @@ class User extends Authenticatable
     public function entregas() { 
         return $this->hasMany(Entrega::class); 
     }
-    
+    public function seguimientos()
+    {
+        return $this->hasMany(Seguimiento::class);
+    }
+
 }

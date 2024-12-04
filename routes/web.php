@@ -11,11 +11,13 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\QualificationController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SprintController;
+use App\Http\Controllers\SprintareaController;
 use App\Http\Controllers\TareaController;
+use App\Http\Controllers\ProductBacklogController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ViewcompController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\SeguimientoController;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -68,6 +70,21 @@ Route::middleware([
     
     Route::resource('sprints', SprintController::class);
 
+Route::get('/product-backlog', [ProductBacklogController::class, 'index'])->name('product-backlog.index');
+
+Route::resource('sprintarea', SprintareaController::class)
+    ->except(['show'])
+    ->names([
+        'index' => 'sprintarea.index',
+        'create' => 'sprintarea.create',
+        'store' => 'sprintarea.store',
+        'edit' => 'sprintarea.edit',
+        'update' => 'sprintarea.update',
+        'destroy' => 'sprintarea.destroy',
+    ]);
+    Route::get('/sprints/assign', [SprintController::class, 'assign'])->name('sprints.assign');
+
+
     Route::resource('entregables', EntregableController::class);
     Route::resource('tareas', TareaController::class);
 
@@ -97,3 +114,13 @@ Route::resource('qualifications', QualificationController::class);
 Route::get('grupos/{grupo}/calificaciones', [GrupoController::class, 'verCalificaciones'])->name('grupos.verCalificaciones');
 
 });
+ //SOLO PARA EL SEGUIMIENTO O MODULO REQUERIMIENTO 8 C*
+//Route::delete('permissions/{permissionId}', [PermissionController::class, 'destroy'])->name('permissions.destroy');
+//Route::post('/seguimientos/{sprintId}', [SeguimientoController::class, 'store'])->name('seguimientos.store');
+Route::delete('/seguimientos/{id}', [SeguimientoController::class, 'destroy'])->name('seguimientos.destroy');
+
+//Route::get('/seguimientos/create', [SeguimientoController::class, 'create'])->name('seguimientos.create');
+Route::resource('seguimientos', SeguimientoController::class);
+Route::post('/seguimientos', [SeguimientoController::class, 'store'])->name('seguimientos.store');
+Route::get('/seguimientos/{seguimientos}/edit', [SeguimientoController::class, 'edit'])->name('seguimientos.edit');
+Route::put('/seguimientos/{seguimiento}', [SeguimientoController::class, 'update'])->name('seguimientos.update');
