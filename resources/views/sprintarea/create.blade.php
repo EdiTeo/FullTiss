@@ -44,7 +44,7 @@
             <select name="estado" id="estado" class="form-control" required>
                 <option value="pendiente" {{ old('estado') == 'pendiente' ? 'selected' : '' }}>Pendiente</option>
                 <option value="en_progreso" {{ old('estado') == 'en_progreso' ? 'selected' : '' }}>En Progreso</option>
-                <option value="completada" {{ old('estado') == 'completada' ? 'selected' : '' }}>Completada</option>
+                <option value="completado" {{ old('estado') == 'completado' ? 'selected' : '' }}>Completado</option>
             </select>
         </div>
         
