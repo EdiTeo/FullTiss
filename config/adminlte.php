@@ -386,24 +386,29 @@ return [
         ],
         ['header' => 'Proyecto', 'can' => 'view-proyecto',],
         [
-            'text' => 'Sprint',
-            'url' => 'sprints',
+            'text' => 'Planificacion',
+            'url' => 'product-backlog',
             'icon' => 'fas fa-fw fa-user',
             'can' => 'view-proyecto',
         ],
-        [
-            'text' => 'Product Backlog',
-            'url' => '',
-            'icon' => 'fas fa-fw fa-lock',
-            'can' => 'view-proyecto',
-        ],
+       // [
+       //     'text' => 'Product Backlog',
+      //      'url' => '',
+      //      'icon' => 'fas fa-fw fa-lock',
+      //      'can' => 'view-proyecto',
+      //  ],
         [
             'text' => 'Proyecto Tareas',
             'url' => 'estudiante/entregables',
             'icon' => 'fas fa-fw fa-lock',
             'can' => 'view-proyecto',
         ],
-
+        [
+            'text' => 'Seguimiento Semanal',
+            'url' => 'seguimientos',
+            'icon' => 'fas fa-fw fa-lock',
+            'can' => 'view-proyecto',
+        ],
         ['header' => 'labels'],
         [
             'text' => 'important',
