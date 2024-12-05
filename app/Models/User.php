@@ -97,4 +97,9 @@ class User extends Authenticatable
         return $this->hasMany(Seguimiento::class);
     }
 
+    public function crossevaluations() { 
+        return $this->hasMany(Crossevaluation::class); 
+    }
+
+    
 }

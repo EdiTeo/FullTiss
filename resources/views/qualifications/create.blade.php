@@ -28,7 +28,7 @@
                     <div class="form-group">
                         <label for="user_id">Estudiante</label>
                         <select name="user_id" id="user_id" class="form-control" required>
-                            @foreach ($grupo->users as $user)
+                            @foreach ($estudiantes as $user)
                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                             @endforeach
                         </select>
@@ -62,3 +62,12 @@
     </div>
 @stop
 
+@section('js')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var fechaField = document.getElementById('fecha_calificacion');
+        var today = new Date().toISOString().split('T')[0];
+        fechaField.value = today;
+    });
+</script>
+@stop

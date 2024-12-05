@@ -39,5 +39,12 @@ class Entregable extends Model
     {
         return $this->belongsTo(\App\Models\User::class, 'docente_id', 'id');
     }
+
+    public function tareas() { 
+        return $this->hasMany(Tarea::class); 
+    }
     
+    public function crossevaluations() { 
+        return $this->hasMany(Crossevaluation::class); 
+    }
 }

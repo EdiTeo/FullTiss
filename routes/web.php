@@ -2,10 +2,13 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AssignmentController;
+use App\Http\Controllers\CrossevaluationController;
 use App\Http\Controllers\EntregableController;
 use App\Http\Controllers\EntregaController;
 use App\Http\Controllers\RubricaController;
 use App\Http\Controllers\EstudianteController;
+use App\Http\Controllers\EvaluationController;
+use App\Http\Controllers\GroupMemberEvaluationController;
 use App\Http\Controllers\GrupoController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\QualificationController;
@@ -19,6 +22,8 @@ use App\Http\Controllers\ViewcompController;
 use App\Http\Controllers\AsistenciaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SeguimientoController;
+use App\Http\Controllers\SelfevaluationController;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -115,6 +120,37 @@ Route::resource('qualifications', QualificationController::class);
 
 
 Route::get('grupos/{grupo}/calificaciones', [GrupoController::class, 'verCalificaciones'])->name('grupos.verCalificaciones');
+
+
+
+
+
+// Definir las rutas para index, create y store
+Route::resource('crossevaluations', CrossevaluationController::class)->only(['index', 'store']);
+
+// Definir una ruta específica para create con los parámetros necesarios
+Route::get('crossevaluations/create/{evaluation}/{grupo_calificado_id}', [CrossevaluationController::class, 'create'])->name('crossevaluations.create');
+
+// Definir una ruta para mostrar los promedios de calificaciones
+Route::get('crossevaluations/averages', [CrossevaluationController::class, 'showAverages'])->name('crossevaluations.averages');
+
+
+Route::resource('evaluations', EvaluationController::class);
+
+
+
+    Route::get('selfevaluations/create/{evaluation}', [SelfevaluationController::class, 'create'])->name('selfevaluations.create');
+    Route::post('selfevaluations', [SelfevaluationController::class, 'store'])->name('selfevaluations.store');
+    Route::get('selfevaluations', [SelfevaluationController::class, 'index'])->name('selfevaluations.index');
+
+        Route::get('group_member_evaluations/create/{evaluation}/{evaluatee}', [GroupMemberEvaluationController::class, 'create'])->name('group_member_evaluations.create');
+        Route::post('group_member_evaluations', [GroupMemberEvaluationController::class, 'store'])->name('group_member_evaluations.store');
+        Route::get('group_member_evaluations', [GroupMemberEvaluationController::class, 'index'])->name('group_member_evaluations.index');
+ 
+
+
+    Route::get('grupos/{grupo}/evaluaciones', [GrupoController::class, 'verTodasLasEvaluaciones'])->name('grupos.verTodasLasEvaluaciones');
+
 
 });
  //SOLO PARA EL SEGUIMIENTO O MODULO REQUERIMIENTO 8 C*
