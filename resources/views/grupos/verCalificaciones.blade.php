@@ -19,14 +19,13 @@
                             <tr>
                                 <th>Estudiante</th>
                                 @foreach($entregables as $entregable)
-                                    <th>{{ $entregable->nombre }} <br><small>(<strong>{{ round($entregable->peso) }}</strong>)</small></th>
+                                    <th>{{ $entregable->nombre }} <br><small>(<strong>{{ is_numeric($entregable->peso) ? round($entregable->peso) : 'N/A' }}</strong>)</small></th>
                                 @endforeach
-                                <th>Autoevaluaciones <br><small>(<strong>{{ round($selfevaluations->first()->evaluation->peso ?? 'N/A') }}</strong>)</small></th>
-                                <th>Evaluaciones Cruzadas <br><small>(<strong>{{ round($evaluacionesCruzadas->first()->evaluation->peso ?? 'N/A') }}</strong>)</small></th>
-                                <th>Evaluaciones de Grupo <br><small>(<strong>{{ round($groupMemberEvaluations->first()->evaluation->peso ?? 'N/A') }}</strong>)</small></th>
+                                <th>Autoevaluaciones <br><small>(<strong>{{ is_numeric($selfevaluations->first()->evaluation->peso ?? null) ? round($selfevaluations->first()->evaluation->peso) : 'N/A' }}</strong>)</small></th>
+                                <th>Evaluaciones Cruzadas <br><small>(<strong>{{ is_numeric($evaluacionesCruzadas->first()->evaluation->peso ?? null) ? round($evaluacionesCruzadas->first()->evaluation->peso) : 'N/A' }}</strong>)</small></th>
+                                <th>Evaluaciones de Grupo <br><small>(<strong>{{ is_numeric($groupMemberEvaluations->first()->evaluation->peso ?? null) ? round($groupMemberEvaluations->first()->evaluation->peso) : 'N/A' }}</strong>)</small></th>
                                 <th>Total</th> <!-- Columna adicional para el total -->
                             </tr>
-
                         </thead>
                         <tbody>
                             @foreach ($grupo->users as $user)
@@ -63,11 +62,11 @@
                         </tbody>
                     </table>
                 </div>
-
-                       
+            </div>
         </div>
-         <!--LISTA DE ASISTENCIAS GRUPAL-->
-         <div class="card mt-4">
+        
+        <!--LISTA DE ASISTENCIAS GRUPAL-->
+        <div class="card mt-4">
             <div class="card-header">
                 <h3 class="card-title">Lista de Asistencias</h3>
                 <a href="{{ route('asistencias.registrar', $grupo->id) }}" class="btn btn-primary float-right">Registrar Asistencia</a>
@@ -97,14 +96,10 @@
                                 </tr>
                             @endforeach
                         @endif
-
                     </tbody>
                 </table>
-
             </div>
         </div>
-        
-        
-        <!--===FIN==-->
+        <!--===FIN===-->
     </div>
 @stop
