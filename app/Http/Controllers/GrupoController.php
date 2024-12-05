@@ -265,7 +265,7 @@ public function verCalificaciones($grupoId)
     });
    $asistencias = Asistencia::where('grupo_id', $grupoId)->get();
 
-    return view('grupos.verCalificaciones', compact('grupo', 'entregables', 'calificaciones', 'evaluacionesCruzadas', 'selfevaluations', 'groupMemberEvaluations', 'totales', 'promedioEvaluacionesCruzadas', 'promediosEvaluacionesGrupo',, 'asistencias'));
+    return view('grupos.verCalificaciones', compact('grupo', 'entregables', 'calificaciones', 'evaluacionesCruzadas', 'selfevaluations', 'groupMemberEvaluations', 'totales', 'promedioEvaluacionesCruzadas', 'promediosEvaluacionesGrupo', 'asistencias'));
 }
 
 
