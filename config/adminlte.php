@@ -320,13 +320,6 @@ return [
             'url' => 'admin/blog',
             'can' => 'manage-blog',
         ],
-        [
-            'text' => 'pages',
-            'url' => 'admin/pages',
-            'icon' => 'far fa-fw fa-file',
-            'label' => 4,
-            'label_color' => 'success',
-        ],
         ['header' => 'Administrador', 'can' => 'view-admin',],
         [
             'text' => 'Usuarios',
@@ -371,6 +364,12 @@ return [
             'icon' => 'fas fa-fw fa-lock',
             'can' => 'view-docente',
         ],
+        [
+            'text' => 'Evaluaciones',
+            'url' => 'evaluations',
+            'icon' => 'fas fa-fw fa-lock',
+            'can' => 'view-docente',
+        ],
         ['header' => 'Estudiantes', 'can' => 'view-estudiante',],
         [
             'text' => 'Compañeros',
@@ -391,12 +390,9 @@ return [
             'icon' => 'fas fa-fw fa-user',
             'can' => 'view-proyecto',
         ],
-       // [
-       //     'text' => 'Product Backlog',
-      //      'url' => '',
-      //      'icon' => 'fas fa-fw fa-lock',
-      //      'can' => 'view-proyecto',
-      //  ],
+    // Otros elementos del menú
+
+    // Otros elementos del menú
         [
             'text' => 'Proyecto Tareas',
             'url' => 'estudiante/entregables',
@@ -409,22 +405,32 @@ return [
             'icon' => 'fas fa-fw fa-lock',
             'can' => 'view-proyecto',
         ],
-        ['header' => 'labels'],
+
+        ['header' => 'Evaluaciones Estudiantes', 'can' => 'view-proyecto',],
         [
-            'text' => 'important',
-            'icon_color' => 'red',
-            'url' => '#',
+            'text' => 'Evaluacion',
+            'icon' => 'fas fa-fw fa-user',
+            'can'  => 'view-proyecto',
+            'submenu' => [
+                [
+                    'text' => 'Evaluaciones Cruzadas',
+                    'url'  => 'crossevaluations',
+                    'icon' => 'fas fa-fw fa-arrows-alt',
+                ],
+                [
+                    'text' => 'Autoevaluaciones',
+                    'url'  => 'selfevaluations',
+                    'icon' => 'fas fa-fw fa-brain',
+                ],
+                [
+                    'text' => 'Evaluaciones de Grupo',
+                    'url'  => 'group_member_evaluations',
+                    'icon' => 'fas fa-fw fa-clipboard-list',
+                ],
+            ],
         ],
-        [
-            'text' => 'warning',
-            'icon_color' => 'yellow',
-            'url' => '#',
-        ],
-        [
-            'text' => 'information',
-            'icon_color' => 'cyan',
-            'url' => '#',
-        ],
+        
+
     ],
 
     /*

@@ -26,8 +26,24 @@ class QualificationController extends Controller
         $grupo = $entrega->grupo; 
         $entregable = $entrega->tarea->entregable; // Obtener el entregable asociado a la tarea de la entrega
     
-        return view('qualifications.create', compact('entrega', 'grupo', 'entregable'));
+        // Asegurarse de cargar las tareas del entregable
+        $entregable->load('tareas');
+    
+        // Obtener las tareas asociadas a este entregable
+        $tareas = $entregable->tareas->pluck('id');
+    
+        // Obtener los estudiantes que ya han sido calificados para cualquiera de las tareas de este entregable
+        $estudiantesCalificados = Qualification::whereIn('entrega_id', $tareas)
+                                               ->where('entregable_id', $entregable->id)
+                                               ->pluck('user_id');
+    
+        // Filtrar estudiantes que aún no han sido calificados para este entregable
+        $estudiantes = $grupo->users->whereNotIn('id', $estudiantesCalificados);
+    
+        return view('qualifications.create', compact('entrega', 'grupo', 'entregable', 'estudiantes'));
     }
+    
+    
     
 
     /**
