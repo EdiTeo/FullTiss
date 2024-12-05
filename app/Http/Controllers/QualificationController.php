@@ -41,7 +41,6 @@ class QualificationController extends Controller
             'entregable_id' => 'required|exists:entregables,id',
             'nota' => 'required|integer|min:0|max:100',
             'comentarios' => 'nullable|string',
-            'fecha_calificacion' => 'required|date',
         ]);
     
         // Obtener el peso del entregable
@@ -53,15 +52,32 @@ class QualificationController extends Controller
             return back()->withErrors(['nota' => "La nota no puede ser mayor que el peso del entregable, que es $pesoMaximo."]);
         }
     
-        // Crear la calificación
-        $qualification = Qualification::create($request->all());
+        // Datos a guardar
+        $data = [
+            'entrega_id' => $request->input('entrega_id'),
+            'user_id' => $request->input('user_id'),
+            'entregable_id' => $request->input('entregable_id'),
+            'nota' => $request->input('nota'),
+            'comentarios' => $request->input('comentarios'),
+            'fecha_calificacion' => now()->toDateString(),
+        ];
+    
+        // Crear o actualizar la calificación
+        Qualification::updateOrCreate(
+            [
+                'entrega_id' => $data['entrega_id'],
+                'user_id' => $data['user_id'],
+                'entregable_id' => $data['entregable_id'],
+            ],
+            $data
+        );
     
         // Obtener el ID del grupo desde la entrega asociada
         $entrega = Entrega::findOrFail($request->input('entrega_id'));
         $grupoId = $entrega->grupo_id;
     
-        return redirect()->route('grupos.verEntregas', ['id' => $grupoId])->with('success', 'Calificación guardada correctamente.');
-    }
+        return redirect()->route('grupos.verEntregas', ['id' => $grupoId])->with('success', 'Calificación registrada correctamente.');
+        }
     
     
     

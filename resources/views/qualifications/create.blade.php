@@ -43,10 +43,10 @@
                         <small id="pesoNotaHelp" class="form-text text-muted">La nota debe ser menor o igual a {{ $entregable->peso }}.</small>
                     </div>
 
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label for="fecha_calificacion">Fecha de Calificación</label>
                         <input type="date" name="fecha_calificacion" id="fecha_calificacion" class="form-control" required>
-                    </div>
+                    </div> --}}
 
                     <div class="form-group">
                         <label for="comentarios">Comentarios</label>
