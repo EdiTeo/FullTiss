@@ -54,10 +54,10 @@
                                     <form action="{{ route('grupos.updateStatus', $grupo->id) }}" method="POST">
                                         @csrf
                                         @method('PATCH')
-                                        <button type="submit" class="btn btn-primary btn-sm">Cambiar Estado</button>
-                                        <a href="{{ route('grupos.verEntregas', $grupo->id) }}" class="btn btn-secondary btn-sm">Historial</a>
+                                        <button type="submit" class="btn btn-danger btn-sm">Cambiar Estado</button>
+                                        <a href="{{ route('grupos.verEntregas', $grupo->id) }}" class="btn btn-secondary btn-sm">Ver entregas</a>
                                         <!-- Botón de Seguimiento de Calificaciones -->
-                                        <a href="{{ route('grupos.verCalificaciones', $grupo->id) }}" class="btn btn-info btn-sm">Seguimiento</a>
+                                        <a href="{{ route('grupos.verCalificaciones', $grupo->id) }}" class="btn btn-info btn-sm">Ver Planilla</a>
                                     </form>
                                 </td>
                             </tr>

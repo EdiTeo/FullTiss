@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Assignment;
 use App\Models\Grupo;
 use App\Models\Qualification;
+use App\Models\Asistencia;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -59,7 +60,7 @@ class GrupoController extends Controller
     {
         // Validar los datos recibidos
         $request->validate([
-            'nombre' => 'required|string|max:255',
+            'required|unique:grupos,nombre',
             'descripcion' => 'nullable|string',
             'estudiantes' => 'required|array',
            // 'solvencia_tecnica' => 'required|file|mimes:pdf|max:2048',
@@ -225,8 +226,8 @@ public function verEntregas($id): View
             return $entrega->tarea->entregable;
         })->unique();
         $calificaciones = Qualification::whereIn('entrega_id', $grupo->entregas->pluck('id'))->get();
-
-        return view('grupos.verCalificaciones', compact('grupo', 'entregables', 'calificaciones'));
+        $asistencias = Asistencia::where('grupo_id', $grupoId)->get();
+        return view('grupos.verCalificaciones', compact('grupo', 'entregables', 'calificaciones', 'asistencias'));
     }
 
 
