@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('grupos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('docente_id')->constrained('users')->onDelete('cascade'); // Relación con el docente
-            $table->string('nombre');
+            $table->string('nombre')->unique();;
             $table->text('descripcion')->nullable();
             $table->boolean('estado')->default(false); // Estado por defecto es false
            // $table->string('solvencia_tecnica')->nullable(); // Ruta del PDF

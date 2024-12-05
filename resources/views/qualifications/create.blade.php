@@ -10,7 +10,9 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Calificar Entregable</h3>
+                <h2 class="card-title">Calificar Entregable</h2>
+                 <!-- Botón Cancelar -->
+                 <a href="javascript:history.back()" class="btn btn-danger ms-auto" style="margin-left: 400px;">Cancelar</a>
             </div>
             <div class="card-body">
                 <form action="{{ route('qualifications.store') }}" method="POST">
@@ -26,7 +28,7 @@
                     <div class="form-group">
                         <label for="user_id">Estudiante</label>
                         <select name="user_id" id="user_id" class="form-control" required>
-                            @foreach ($grupo->users as $user)
+                            @foreach ($estudiantes as $user)
                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                             @endforeach
                         </select>
@@ -41,10 +43,10 @@
                         <small id="pesoNotaHelp" class="form-text text-muted">La nota debe ser menor o igual a {{ $entregable->peso }}.</small>
                     </div>
 
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label for="fecha_calificacion">Fecha de Calificación</label>
                         <input type="date" name="fecha_calificacion" id="fecha_calificacion" class="form-control" required>
-                    </div>
+                    </div> --}}
 
                     <div class="form-group">
                         <label for="comentarios">Comentarios</label>
@@ -52,9 +54,20 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary">Guardar Calificación</button>
+                     <!-- Botón Cancelar -->
+                     {{-- <a href="javascript:history.back()" class="btn btn-danger ms-auto" style="margin-left: 200px;">Cancelar</a> --}}
                 </form>
             </div>
         </div>
     </div>
 @stop
 
+@section('js')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var fechaField = document.getElementById('fecha_calificacion');
+        var today = new Date().toISOString().split('T')[0];
+        fechaField.value = today;
+    });
+</script>
+@stop
