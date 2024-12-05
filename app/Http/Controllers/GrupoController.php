@@ -60,7 +60,7 @@ class GrupoController extends Controller
     {
         // Validar los datos recibidos
         $request->validate([
-            'nombre' => 'required|string|max:255',
+            'required|unique:grupos,nombre',
             'descripcion' => 'nullable|string',
             'estudiantes' => 'required|array',
            // 'solvencia_tecnica' => 'required|file|mimes:pdf|max:2048',
