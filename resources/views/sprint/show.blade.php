@@ -28,14 +28,14 @@
                             <dt class="text-sm font-medium text-gray-700">Fecha Fin</dt>
                             <dd class="text-sm text-gray-900">{{ $sprint->fecha_fin }}</dd>
                         </div>
-                        <div class="col-md-6 mb-3">
+                        <!---<div class="col-md-6 mb-3">
                             <dt class="text-sm font-medium text-gray-700">Grupo Id</dt>
                             <dd class="text-sm text-gray-900">{{ $sprint->grupo_id }}</dd>
                         </div>
                         <div class="col-md-6 mb-3">
                             <dt class="text-sm font-medium text-gray-700">User Id</dt>
                             <dd class="text-sm text-gray-900">{{ $sprint->user_id }}</dd>
-                        </div>
+                        </div>-->
                     </dl>
                 </div>
             </div>

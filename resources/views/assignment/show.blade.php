@@ -1,7 +1,7 @@
 @extends('adminlte::page')
-@section('title', 'Show Assignment')
+@section('title', 'Ver asignaciones')
 @section('content_header')
-    <h1>Show Assignment</h1>
+    <h1>Ver asignaciones</h1>
 @stop
 @section('content')
     <div class="container mt-5">
@@ -9,8 +9,8 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Show Assignment
-                            <a href="{{ route('assignments.index') }}" class="btn btn-danger float-end">Back</a>
+                        <h4>Ver asignaciones
+                            <a href="{{ route('assignments.index') }}" class="btn btn-danger float-end">Atrás</a>
                         </h4>
                     </div>
                     <div class="card-body">

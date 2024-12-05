@@ -14,8 +14,8 @@ class Grupo extends Model
         'docente_id', // Añade esta línea
         'nombre',
         'descripcion',
-        'solvencia_tecnica',
-        'boleta_garantia',
+        //'solvencia_tecnica',
+        //'boleta_garantia',
         'estado',
     ];
 
@@ -37,5 +37,27 @@ class Grupo extends Model
     }
 
 
-    public function entregas() { return $this->hasMany(Entrega::class); }
+    public function entregas() { 
+        return $this->hasMany(Entrega::class); 
+    }
+
+    public function seguimientos()
+    {
+        return $this->hasMany(Seguimiento::class);
+    }
+    public function sprints()
+{
+    return $this->hasMany(Sprint::class);
+}
+
+
+    public function crossevaluations() { 
+        return $this->hasMany(Crossevaluation::class); 
+    }
+
+    public function crossevaluationsReceived() { 
+        return $this->hasMany(Crossevaluation::class, 'grupo_calificado_id'); 
+    }
+
+
 }

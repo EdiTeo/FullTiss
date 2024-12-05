@@ -1,7 +1,7 @@
 @extends('adminlte::page')
-@section('title', 'Assignments')
+@section('title', 'Asignaciones')
 @section('content_header')
-    <h1>Assignments</h1>
+    <h1>Asignaciones</h1>
 @stop
 @section('content')
     <div class="py-12">
@@ -10,11 +10,12 @@
                 <div class="w-full">
                     <div class="sm:flex sm:items-center">
                         <div class="sm:flex-auto">
-                            <h1 class="text-base font-semibold leading-6 text-gray-900">{{ __('Assignments') }}</h1>
-                            <p class="mt-2 text-sm text-gray-700">A list of all the {{ __('Assignments') }}.</p>
+                            <h1 class="text-base font-semibold leading-6 text-gray-900">{{ __('Asignaciones') }}</h1>
+                            <p class="mt-2 text-sm text-gray-700">Una lista de todos los
+                                {{ __('Asignaciones') }}.</p>
                         </div>
                         <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                            <a type="button" href="{{ route('assignments.create') }}" class="btn btn-success">Add new</a>
+                            <a type="button" href="{{ route('assignments.create') }}" class="btn btn-success">Agregar</a>
                         </div>
                     </div>
                     <div class="flow-root">

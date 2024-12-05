@@ -6,6 +6,7 @@ use App\Models\Entregable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\EntregableRequest;
+use App\Models\Evaluation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
@@ -35,15 +36,29 @@ class EntregableController extends Controller
     {
         $docente = Auth::user();
         $entregable = new Entregable();
-
-        return view('entregable.create', compact('entregable', 'docente'));
+    
+        // Calcular el peso restante considerando tanto los entregables como las evaluaciones
+        $pesoTotalExistente = Entregable::where('docente_id', $docente->id)->sum('peso') +
+                              Evaluation::where('docente_id', $docente->id)->sum('peso');
+        $pesoMaximoPermitido = 100;
+        $pesoRestante = $pesoMaximoPermitido - $pesoTotalExistente;
+    
+        return view('entregable.create', compact('entregable', 'docente', 'pesoRestante'));
     }
+    
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(EntregableRequest $request): RedirectResponse
     {
+        $docenteId = Auth::id();
+        $pesoRestante = 100 - Entregable::where('docente_id', $docenteId)->sum('peso');
+
+        if ($request->input('peso') > $pesoRestante) {
+            return back()->withErrors(['peso' => "El peso total no puede exceder 100. Peso restante: $pesoRestante."]);
+        }
+
         Entregable::create($request->validated());
 
         return Redirect::route('entregables.index')
@@ -68,7 +83,10 @@ class EntregableController extends Controller
         $entregable = Entregable::findOrFail($id);
         $docente = Auth::user(); // Obtener el docente autenticado
 
-        return view('entregable.edit', compact('entregable', 'docente'));
+       // Calcular el peso restante excluyendo el peso del entregable actual
+       $pesoRestante = 100 - Entregable::where('docente_id', $docente->id)->where('id', '!=', $id)->sum('peso');
+
+       return view('entregable.edit', compact('entregable', 'docente', 'pesoRestante'));
     }
 
     /**
@@ -76,6 +94,13 @@ class EntregableController extends Controller
      */
     public function update(EntregableRequest $request, Entregable $entregable): RedirectResponse
     {
+        $docenteId = Auth::id();
+        $pesoRestante = 100 - Entregable::where('docente_id', $docenteId)->where('id', '!=', $entregable->id)->sum('peso');
+
+        if ($request->input('peso') > $pesoRestante) {
+            return back()->withErrors(['peso' => "El peso total no puede exceder 100. Peso restante: $pesoRestante."]);
+        }
+        
         $entregable->update($request->validated());
 
         return Redirect::route('entregables.index')

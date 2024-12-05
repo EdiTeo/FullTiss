@@ -9,6 +9,12 @@
     <!-- Campo oculto para enviar el docente_id -->
     <input type="hidden" name="docente_id" value="{{ $docente->id }}">
 
+    <!-- Mostrar el peso restante -->
+    <div class="mb-3">
+        <label for="peso_restante" class="form-label">Peso Restante</label>
+        <input type="text" id="peso_restante" class="form-control bg-light text-muted" value="{{ $pesoRestante }}" readonly>
+    </div>
+
     <!-- Campos para crear el entregable -->
     <div class="mb-3">
         <label for="nombre" class="form-label">Nombre</label>
@@ -28,7 +34,7 @@
 
     <div class="mb-3">
         <label for="peso" class="form-label">Peso</label>
-        <input type="text" name="peso" id="peso" class="form-control" value="{{ old('peso', $entregable?->peso) }}" autocomplete="peso" placeholder="Peso">
+        <input type="number" name="peso" id="peso" class="form-control" value="{{ old('peso', $entregable?->peso) }}" autocomplete="peso" placeholder="Peso" max="{{ $pesoRestante }}">
         @error('peso')
             <span class="text-danger small mt-2">{{ $message }}</span>
         @enderror

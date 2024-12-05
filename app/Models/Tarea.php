@@ -64,6 +64,10 @@ class Tarea extends Model
         return $this->hasMany(Entrega::class);
     }
 
+
+    public function crossevaluations() { 
+        return $this->hasMany(Crossevaluation::class); 
+    }
 }
 
 
