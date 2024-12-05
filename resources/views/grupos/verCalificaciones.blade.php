@@ -26,6 +26,7 @@
                                 <th>Evaluaciones de Grupo <br><small>(<strong>{{ round($groupMemberEvaluations->first()->evaluation->peso ?? 'N/A') }}</strong>)</small></th>
                                 <th>Total</th> <!-- Columna adicional para el total -->
                             </tr>
+
                         </thead>
                         <tbody>
                             @foreach ($grupo->users as $user)
@@ -62,7 +63,48 @@
                         </tbody>
                     </table>
                 </div>
+
+                       
+        </div>
+         <!--LISTA DE ASISTENCIAS GRUPAL-->
+         <div class="card mt-4">
+            <div class="card-header">
+                <h3 class="card-title">Lista de Asistencias</h3>
+                <a href="{{ route('asistencias.registrar', $grupo->id) }}" class="btn btn-primary float-right">Registrar Asistencia</a>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Estudiante</th>
+                            <th>Estado</th>
+                            <th>Justificación</th>
+                            <th>Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if($asistencias->isEmpty())
+                            <tr>
+                                <td colspan="4">No hay asistencias registradas</td>
+                            </tr>
+                        @else
+                            @foreach($asistencias as $asistencia)
+                                <tr>
+                                    <td>{{ $asistencia->user->name }}</td>
+                                    <td>{{ ucfirst(str_replace('_', ' ', $asistencia->estado)) }}</td>
+                                    <td>{{ $asistencia->justificacion ?? 'N/A' }}</td>
+                                    <td>{{ $asistencia->fecha }}</td>
+                                </tr>
+                            @endforeach
+                        @endif
+
+                    </tbody>
+                </table>
+
             </div>
         </div>
+        
+        
+        <!--===FIN==-->
     </div>
 @stop

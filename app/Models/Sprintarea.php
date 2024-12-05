@@ -9,12 +9,7 @@ class Sprintarea extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nombre',
-        'descripcion',
-        'estado',
-        'prioridad',
-        'sprint_id',
-        'user_id',
+       'sprint_id', 'nombre', 'descripcion', 'prioridad', 'estado', 'user_id'
     ];
 
     public function sprint()

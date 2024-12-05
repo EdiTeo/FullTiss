@@ -11,7 +11,7 @@
     <!-- Card para las tareas -->
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h3 class="mb-0">Lista de Tareas</h3>
+            <h3 class="mb-0">Lista de ítems</h3>
             <div>
                 <!-- Botón para ver sprints -->
                 <a href="{{ route('sprints.index') }}" class="btn btn-success" style="margin-right: 60px;">
@@ -41,7 +41,7 @@
                 </thead>
                 <tbody>
                     @forelse($tareas as $tarea)
-                        <tr>
+                        <tr> 
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $tarea->nombre }}</td>
                             <td>{{ $tarea->prioridad }}</td>
@@ -59,7 +59,7 @@
                                     <button type="submit" class="btn btn-danger btn-sm">
                                         <i class="fas fa-trash"></i> Eliminar
                                     </button>
-                                </form>
+                                </form>                                
                                 <!-- Botón para asignar a sprint CORREGIR ESTO Y ESTADOS  -->
                                 {{-- <a href="{{ route('sprints.assign', $tarea->id) }}" class="btn btn-info btn-sm">
                                     <i class="fas fa-tasks"></i> Asignar a Sprint

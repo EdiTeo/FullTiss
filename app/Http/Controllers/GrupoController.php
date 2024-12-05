@@ -7,7 +7,11 @@ use App\Models\Crossevaluation;
 use App\Models\GroupMemberEvaluation;
 use App\Models\Grupo;
 use App\Models\Qualification;
+
 use App\Models\Selfevaluation;
+
+use App\Models\Asistencia;
+
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -62,7 +66,7 @@ class GrupoController extends Controller
     {
         // Validar los datos recibidos
         $request->validate([
-            'nombre' => 'required|string|max:255',
+            'required|unique:grupos,nombre',
             'descripcion' => 'nullable|string',
             'estudiantes' => 'required|array',
            // 'solvencia_tecnica' => 'required|file|mimes:pdf|max:2048',
@@ -221,6 +225,7 @@ public function verEntregas($id): View
 }
 
 
+ 
 public function verCalificaciones($grupoId)
 {
     $grupo = Grupo::findOrFail($grupoId);
@@ -258,8 +263,9 @@ public function verCalificaciones($grupoId)
         $notaTotal = $notaEntregables + $promedioEvaluacionesCruzadas + $notaAutoevaluacion + $notaEvaluacionesGrupo;
         return [$user->id => round($notaTotal)];
     });
+   $asistencias = Asistencia::where('grupo_id', $grupoId)->get();
 
-    return view('grupos.verCalificaciones', compact('grupo', 'entregables', 'calificaciones', 'evaluacionesCruzadas', 'selfevaluations', 'groupMemberEvaluations', 'totales', 'promedioEvaluacionesCruzadas', 'promediosEvaluacionesGrupo'));
+    return view('grupos.verCalificaciones', compact('grupo', 'entregables', 'calificaciones', 'evaluacionesCruzadas', 'selfevaluations', 'groupMemberEvaluations', 'totales', 'promedioEvaluacionesCruzadas', 'promediosEvaluacionesGrupo',, 'asistencias'));
 }
 
 
@@ -280,6 +286,7 @@ public function verTodasLasEvaluaciones($grupoId)
 
     return view('grupos.verTodasLasEvaluaciones', compact('grupo', 'evaluacionesCruzadas', 'promedioEvaluacionesCruzadas', 'selfevaluations', 'groupMemberEvaluations', 'promediosEvaluacionesGrupo'));
 }
+
 
 
 
