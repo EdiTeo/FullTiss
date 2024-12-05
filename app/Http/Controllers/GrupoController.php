@@ -66,16 +66,11 @@ class GrupoController extends Controller
     {
         // Validar los datos recibidos
         $request->validate([
-            'required|unique:grupos,nombre',
+            'nombre' => 'required|unique:grupos,nombre',
             'descripcion' => 'nullable|string',
             'estudiantes' => 'required|array',
-           // 'solvencia_tecnica' => 'required|file|mimes:pdf|max:2048',
-           // 'boleta_garantia' => 'required|file|mimes:pdf|max:2048',
+            'estudiantes.*' => 'exists:users,id', // Asegurar que cada estudiante exista en la tabla de usuarios
         ]);
-    
-        // Almacenar los archivos
-       // $solvenciaPath = $request->file('solvencia_tecnica')->store('solvencias', 'public');
-       // $boletaPath = $request->file('boleta_garantia')->store('boletas', 'public');
     
         // Obtener el ID del estudiante que está creando el grupo
         $estudianteId = Auth::id();
@@ -91,20 +86,19 @@ class GrupoController extends Controller
         // Crear el grupo
         $grupo = Grupo::create([
             'docente_id' => $docenteId, // Asignar el docente correspondiente al estudiante
-            'nombre' => $request->nombre,
-            'descripcion' => $request->descripcion,
-           // 'solvencia_tecnica' => $solvenciaPath,
-          //  'boleta_garantia' => $boletaPath,
+            'nombre' => $request->input('nombre'),
+            'descripcion' => $request->input('descripcion'),
             'estado' => false, // Estado inicial
         ]);
     
         // Asociar estudiantes al grupo
-        foreach ($request->estudiantes as $estudianteId) {
+        foreach ($request->input('estudiantes') as $estudianteId) {
             $grupo->users()->attach($estudianteId, ['rol' => 'Rol en Scrum']); // Ajusta el rol según sea necesario
         }
     
         return redirect()->route('grupos.index')->with('success', 'Grupo creado exitosamente.');
     }
+    
     
     
 
@@ -265,7 +259,7 @@ public function verCalificaciones($grupoId)
     });
    $asistencias = Asistencia::where('grupo_id', $grupoId)->get();
 
-    return view('grupos.verCalificaciones', compact('grupo', 'entregables', 'calificaciones', 'evaluacionesCruzadas', 'selfevaluations', 'groupMemberEvaluations', 'totales', 'promedioEvaluacionesCruzadas', 'promediosEvaluacionesGrupo',, 'asistencias'));
+    return view('grupos.verCalificaciones', compact('grupo', 'entregables', 'calificaciones', 'evaluacionesCruzadas', 'selfevaluations', 'groupMemberEvaluations', 'totales', 'promedioEvaluacionesCruzadas', 'promediosEvaluacionesGrupo', 'asistencias'));
 }
 
 
