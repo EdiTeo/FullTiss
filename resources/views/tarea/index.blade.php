@@ -31,8 +31,8 @@
                     <thead class="thead-light">
                         <tr>
                             <th scope="col">No</th>
-                            <th scope="col">ID Entregable</th>
-                            <th scope="col">ID Docente</th>
+                            <th scope="col">Entregable</th>
+                            <th scope="col">Docente</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Descripción</th>
                             <th scope="col">Peso</th>
@@ -45,8 +45,8 @@
                         @foreach ($tareas as $index => $tarea)
                             <tr>
                                 <td>{{ $index + 1 }}</td>
-                                <td>{{ $tarea->entregable_id }}</td>
-                                <td>{{ $tarea->docente_id }}</td>
+                                <td>{{ $tarea->entregable->nombre }}</td> <!-- Mostrar el nombre del entregable -->
+                                <td>{{ $tarea->docente->name }}</td> <!-- Mostrar el nombre del docente -->
                                 <td>{{ $tarea->nombre }}</td>
                                 <td>{{ $tarea->descripcion }}</td>
                                 <td>{{ $tarea->peso }}</td>
@@ -81,3 +81,4 @@
 @section('js')
     <script> console.log("Hola, estoy usando el paquete Laravel-AdminLTE"); </script>
 @stop
+
