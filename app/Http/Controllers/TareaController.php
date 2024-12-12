@@ -22,11 +22,20 @@ class TareaController extends Controller
     public function index(Request $request): View
     {
         $docente = Auth::user();
-        $tareas = Tarea::where('docente_id', $docente->id)->paginate();
+        // Cargar las relaciones 'docente' y 'entregable'
+        $tareas = Tarea::where('docente_id', $docente->id)
+            ->with(['docente', 'entregable'])
+            ->paginate();
 
         return view('tarea.index', compact('tareas'))
             ->with('i', ($request->input('page', 1) - 1) * $tareas->perPage());
     }
+
+
+    
+
+
+
 
     /**
      * Show the form for creating a new resource.

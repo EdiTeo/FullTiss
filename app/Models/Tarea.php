@@ -68,6 +68,10 @@ class Tarea extends Model
     public function crossevaluations() { 
         return $this->hasMany(Crossevaluation::class); 
     }
+
+    public function docente() { return $this->belongsTo(User::class, 'docente_id'); }
+
+    
 }
 
 

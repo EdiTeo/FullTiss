@@ -151,6 +151,8 @@ Route::resource('evaluations', EvaluationController::class);
 
     Route::get('grupos/{grupo}/evaluaciones', [GrupoController::class, 'verTodasLasEvaluaciones'])->name('grupos.verTodasLasEvaluaciones');
 
+        Route::get('mis-calificaciones', [QualificationController::class, 'verMisCalificaciones'])->name('qualifications.mis');
+    
 
 });
  //SOLO PARA EL SEGUIMIENTO O MODULO REQUERIMIENTO 8 C*

@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
+    'logo' => '<b>Full</b>TIS',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -257,7 +257,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => 'inicio',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -298,13 +298,16 @@ return [
     |
     */
 
+
+
+
     'menu' => [
         // Navbar items:
         [
             'type' => 'navbar-search',
             'text' => 'search',
             'topnav_right' => true,
-        ],
+        ],  
         [
             'type' => 'fullscreen-widget',
             'topnav_right' => true,
@@ -369,6 +372,13 @@ return [
             'url' => 'evaluations',
             'icon' => 'fas fa-fw fa-lock',
             'can' => 'view-docente',
+        ],
+        ['header' => 'Mis Calificaciones', 'can' => 'view-estudiante',],
+        [
+            'text' => 'Calificacion ',
+            'url' => 'mis-calificaciones',
+            'icon' => 'fas fa-fw fa-user',
+            'can' => 'view-estudiante',
         ],
         ['header' => 'Estudiantes', 'can' => 'view-estudiante',],
         [

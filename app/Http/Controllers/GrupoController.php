@@ -70,7 +70,8 @@ class GrupoController extends Controller
             'descripcion' => 'nullable|string',
             'estudiantes' => 'required|array',
             'estudiantes.*' => 'exists:users,id', // Asegurar que cada estudiante exista en la tabla de usuarios
-        ]);
+        ],
+        [ 'nombre.unique' => 'El nombre de grupo Empresa ya existe, piense en otro nombre de Grupo Empresa.', ]);
     
         // Obtener el ID del estudiante que está creando el grupo
         $estudianteId = Auth::id();

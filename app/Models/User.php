@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
+use Laravel\Jetstream\Role;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -100,6 +101,11 @@ class User extends Authenticatable
     public function crossevaluations() { 
         return $this->hasMany(Crossevaluation::class); 
     }
+
+    public function rol()
+{
+    return $this->belongsTo(Role::class, 'role_id');
+}
 
     
 }
