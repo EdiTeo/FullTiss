@@ -13,27 +13,32 @@ class ViewcompController extends Controller
 {
     //
 // Función para el dashboard del estudiante
-    public function studentDashboard(): View
-    {
-        $estudiante = Auth::user();
-        $docenteId = Assignment::where('estudiante_id', $estudiante->id)->value('docente_id');
-    
-        // Obtener todos los compañeros de clase
-        $companeros = User::whereHas('assignment', function ($query) use ($docenteId) {
+public function studentDashboard(): View
+{
+    $estudiante = Auth::user();
+    $docenteId = Assignment::where('estudiante_id', $estudiante->id)->value('docente_id');
+
+    // Obtener todos los compañeros de clase
+    $companeros = User::whereHas('assignment', function ($query) use ($docenteId) {
         $query->where('docente_id', $docenteId);
     })
-        ->where('id', '!=', $estudiante->id) // Excluir al usuario autenticado
-        ->get(['id', 'name']);
+    ->where('id', '!=', $estudiante->id) // Excluir al usuario autenticado
+    ->get(['id', 'name']);
 
-        // Agregar el usuario autenticado a la lista de compañeros
-        $companeros->prepend($estudiante); // Agregar al usuario autenticado al inicio de la colección
+    // Agregar el usuario autenticado a la lista de compañeros
+    $companeros->prepend($estudiante); // Agregar al usuario autenticado al inicio de la colección
 
-        // Obtener los IDs de los estudiantes que ya están en grupos
-        $companerosEnGrupo = Grupo::with('users')->get()->flatMap(function ($grupo) {
+    // Verificar si el estudiante ya pertenece a un grupo
+    $estudianteEnGrupo = Grupo::whereHas('users', function ($query) use ($estudiante) {
+        $query->where('user_id', $estudiante->id);
+    })->exists();
+
+    // Obtener los IDs de los estudiantes que ya están en grupos
+    $companerosEnGrupo = Grupo::with('users')->get()->flatMap(function ($grupo) {
         return $grupo->users->pluck('id');
     })->toArray();
 
-    return view('estudiante.dashboard', compact('companeros', 'companerosEnGrupo'));
+    return view('estudiante.dashboard', compact('companeros', 'companerosEnGrupo', 'estudianteEnGrupo'));
 }
 
         
@@ -50,3 +55,7 @@ class ViewcompController extends Controller
             return view('docente.dashboard', compact('estudiantes'));
         }
 }
+
+
+
+

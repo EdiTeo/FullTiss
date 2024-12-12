@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Crossevaluation;
 use App\Models\Entrega;
 use App\Models\Entregable;
+use App\Models\GroupMemberEvaluation;
 use App\Models\Qualification;
+use App\Models\Selfevaluation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class QualificationController extends Controller
 {
@@ -22,6 +27,7 @@ class QualificationController extends Controller
      */
     public function create(Request $request)
     {
+        // Buscar la entrega por su ID
         $entrega = Entrega::findOrFail($request->input('entrega_id')); 
         $grupo = $entrega->grupo; 
         $entregable = $entrega->tarea->entregable; // Obtener el entregable asociado a la tarea de la entrega
@@ -29,19 +35,22 @@ class QualificationController extends Controller
         // Asegurarse de cargar las tareas del entregable
         $entregable->load('tareas');
     
-        // Obtener las tareas asociadas a este entregable
-        $tareas = $entregable->tareas->pluck('id');
+        // Obtener los IDs de las tareas asociadas a este entregable
+        $tareasIds = $entregable->tareas->pluck('id');
     
         // Obtener los estudiantes que ya han sido calificados para cualquiera de las tareas de este entregable
-        $estudiantesCalificados = Qualification::whereIn('entrega_id', $tareas)
-                                               ->where('entregable_id', $entregable->id)
-                                               ->pluck('user_id');
+        $estudiantesCalificados = Qualification::whereIn('entrega_id', function ($query) use ($tareasIds) {
+            $query->select('id')
+                  ->from('entregas')
+                  ->whereIn('tarea_id', $tareasIds);
+        })->pluck('user_id');
     
         // Filtrar estudiantes que aún no han sido calificados para este entregable
-        $estudiantes = $grupo->users->whereNotIn('id', $estudiantesCalificados);
+        $estudiantes = $grupo->users->whereNotIn('id', $estudiantesCalificados->toArray());
     
         return view('qualifications.create', compact('entrega', 'grupo', 'entregable', 'estudiantes'));
     }
+    
     
     
     
@@ -97,6 +106,47 @@ class QualificationController extends Controller
     
     
     
+        
+
+
+        public function verMisCalificaciones(): View
+        {
+            $user = Auth::user();
+        
+            // Obtener el grupo al que pertenece el estudiante
+            $grupo = $user->grupo;
+        
+            // Obtener las entregas del estudiante
+            $calificacionesEntregables = Qualification::where('user_id', $user->id)
+                                                      ->with('entregable')
+                                                      ->get();
+        
+            // Obtener las autoevaluaciones del estudiante
+            $selfevaluations = Selfevaluation::where('user_id', $user->id)
+                                             ->with('evaluation')
+                                             ->get();
+        
+            // Obtener las evaluaciones cruzadas del estudiante
+            $evaluacionesCruzadas = Crossevaluation::where('user_id', $user->id)
+                                                   ->with('evaluation')
+                                                   ->get();
+        
+            // Obtener las evaluaciones de grupo del estudiante
+            $evaluacionesGrupo = GroupMemberEvaluation::where('evaluatee_id', $user->id)
+                                                      ->with('evaluation')
+                                                      ->get();
+        
+            // Calcular el total de las calificaciones
+            $totalCalificaciones = $calificacionesEntregables->sum('nota') +
+                                   $selfevaluations->sum('nota') +
+                                   $evaluacionesCruzadas->avg('nota') +
+                                   $evaluacionesGrupo->avg('nota');
+        
+            return view('qualifications.misCalificaciones', compact('user', 'grupo', 'calificacionesEntregables', 'selfevaluations', 'evaluacionesCruzadas', 'evaluacionesGrupo', 'totalCalificaciones'));
+        }
+        
+
+
 
     /**
      * Display the specified resource.

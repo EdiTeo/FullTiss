@@ -21,12 +21,15 @@ class EntregableController extends Controller
         // Obtener el id del docente autenticado
         $docenteId = Auth::id();
     
-        // Filtrar los entregables por el docente autenticado
-        $entregables = Entregable::where('docente_id', $docenteId)->paginate();
+        // Filtrar los entregables por el docente autenticado y cargar la relación 'docente'
+        $entregables = Entregable::where('docente_id', $docenteId)
+            ->with('docente')
+            ->paginate();
     
         return view('entregable.index', compact('entregables'))
             ->with('i', ($request->input('page', 1) - 1) * $entregables->perPage());
     }
+
     
 
     /**

@@ -31,7 +31,7 @@
                         <thead class="thead-gray">
                             <tr>
                                 <th scope="col">No</th>
-                                <th scope="col">Docente Id</th>
+                                <th scope="col">Docente</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Descripción</th>
                                 <th scope="col">Peso</th>
@@ -42,7 +42,7 @@
                             @foreach ($entregables as $entregable)
                                 <tr>
                                     <td>{{ ++$i }}</td>
-                                    <td>{{ $entregable->docente_id }}</td>
+                                    <td>{{ $entregable->docente->name }}</td> <!-- Aquí se muestra el nombre del docente -->
                                     <td>{{ $entregable->nombre }}</td>
                                     <td>{{ $entregable->descripcion }}</td>
                                     <td>{{ $entregable->peso }}</td>
@@ -52,7 +52,7 @@
                                         <form action="{{ route('entregables.destroy', $entregable->id) }}" method="POST" class="d-inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure to delete?')">{{ __('Eliminar') }}</button>
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar?')">{{ __('Eliminar') }}</button>
                                         </form>
                                     </td>
                                 </tr>

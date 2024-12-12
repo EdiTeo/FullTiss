@@ -17,15 +17,39 @@
                         </h3>
                     </div>
                     <div class="card-body">
+                        {{-- Mostrar mensajes de éxito o error --}}
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        @if (session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        @endif
+
+                        {{-- Mostrar errores de validación --}}
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                         <form action="{{ route('grupos.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre del Grupo</label>
-                                <input type="text" name="nombre" required class="form-control">
+                                <input type="text" name="nombre" required class="form-control" value="{{ old('nombre') }}">
                             </div>
                             <div class="mb-3">
                                 <label for="descripcion" class="form-label">Descripción</label>
-                                <textarea name="descripcion" class="form-control"></textarea>
+                                <textarea name="descripcion" class="form-control">{{ old('descripcion') }}</textarea>
                             </div>
                             <div class="mb-3">
                                 <label for="estudiantes" class="form-label">Integrantes Seleccionados</label>
