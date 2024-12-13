@@ -14,8 +14,8 @@ class Grupo extends Model
         'docente_id', // Añade esta línea
         'nombre',
         'descripcion',
-        'solvencia_tecnica',
-        'boleta_garantia',
+        //'solvencia_tecnica',
+       // 'boleta_garantia',
         'estado',
     ];
 
@@ -38,4 +38,9 @@ class Grupo extends Model
 
 
     public function entregas() { return $this->hasMany(Entrega::class); }
+    public function seguimientos()
+    {
+        return $this->hasMany(Seguimiento::class);
+    }
+
 }

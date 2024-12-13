@@ -15,6 +15,7 @@ use App\Http\Controllers\TareaController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ViewcompController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SeguimientoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -97,3 +98,13 @@ Route::resource('qualifications', QualificationController::class);
 Route::get('grupos/{grupo}/calificaciones', [GrupoController::class, 'verCalificaciones'])->name('grupos.verCalificaciones');
 
 });
+Route::middleware(['auth', 'can:view-docente'])->group(function () {
+    Route::get('docente/seguimientos', [SeguimientoController::class, 'indexDocente'])->name('docente.seguimientos');
+});
+
+Route::middleware(['auth', 'can:view-estudiante'])->group(function () {
+    
+    Route::get('estudiante/seguimientos', [SeguimientoController::class, 'indexEstudiante'])->name('estudiante.seguimientos');
+});
+
+

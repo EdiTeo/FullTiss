@@ -19,7 +19,7 @@
                             <th>Grupo</th>
                             <th>Integrantes</th>
                             <th>Estado</th>
-                            <th>Archivos</th>
+                            <!--<th>Archivos</th>--> 
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -39,7 +39,8 @@
                                         {{ $grupo->estado ? 'Activo' : 'Inactivo' }}
                                     </span>
                                 </td>
-                                <td>
+                               <!---
+                             <td>
                                     @if($grupo->solvencia_tecnica)
                                         <a href="{{ asset('storage/' . $grupo->solvencia_tecnica) }}" target="_blank" class="text-primary">Descargar Solvencia Técnica</a><br>
                                     @endif
@@ -47,6 +48,8 @@
                                         <a href="{{ asset('storage/' . $grupo->boleta_garantia) }}" target="_blank" class="text-primary">Descargar Boleta de Garantía</a>
                                     @endif
                                 </td>
+                            
+                            -->
                                 <td>
                                     <form action="{{ route('grupos.updateStatus', $grupo->id) }}" method="POST">
                                         @csrf

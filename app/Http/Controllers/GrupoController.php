@@ -62,13 +62,13 @@ class GrupoController extends Controller
             'nombre' => 'required|string|max:255',
             'descripcion' => 'nullable|string',
             'estudiantes' => 'required|array',
-            'solvencia_tecnica' => 'required|file|mimes:pdf|max:2048',
-            'boleta_garantia' => 'required|file|mimes:pdf|max:2048',
+            //'solvencia_tecnica' => 'required|file|mimes:pdf|max:2048',
+           // 'boleta_garantia' => 'required|file|mimes:pdf|max:2048',
         ]);
     
         // Almacenar los archivos
-        $solvenciaPath = $request->file('solvencia_tecnica')->store('solvencias', 'public');
-        $boletaPath = $request->file('boleta_garantia')->store('boletas', 'public');
+       // $solvenciaPath = $request->file('solvencia_tecnica')->store('solvencias', 'public');
+       // $boletaPath = $request->file('boleta_garantia')->store('boletas', 'public');
     
         // Obtener el ID del estudiante que está creando el grupo
         $estudianteId = Auth::id();
@@ -86,8 +86,8 @@ class GrupoController extends Controller
             'docente_id' => $docenteId, // Asignar el docente correspondiente al estudiante
             'nombre' => $request->nombre,
             'descripcion' => $request->descripcion,
-            'solvencia_tecnica' => $solvenciaPath,
-            'boleta_garantia' => $boletaPath,
+           // 'solvencia_tecnica' => $solvenciaPath,
+          //  'boleta_garantia' => $boletaPath,
             'estado' => false, // Estado inicial
         ]);
     
