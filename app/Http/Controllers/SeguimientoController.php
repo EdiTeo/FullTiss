@@ -1,174 +1,115 @@
-<?php 
+<?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Seguimiento;
-use Illuminate\Http\RedirectResponse;
+ 
 use Illuminate\Http\Request;
-use App\Models\Grupo;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
-
+use Illuminate\Http\RedirectResponse;
 class SeguimientoController extends Controller
 {
-    /**
-     * Mostrar los seguimientos del estudiante autenticado.
-     */
-    public function indexEstudiante(Request $request): View
+    //Mostrar todos los seguimientos de un sprint
+    public function index(Request $request): View
+    {
+        $user = Auth::user();
+        $grupoId = $user->grupo->first()->id; //Obtener el id del primer grupo del usuario
+          //  $seguimientos = Seguimiento::orderBy('fecha', 'desc')->get();
+            $seguimientos = Seguimiento::where('grupo_id', $grupoId)->paginate(); 
+        return view('seguimientos.index', compact('seguimientos'))
+            ->with('i', ($request->input('page', 1) - 1) * $seguimientos->perPage());
+       
+    }
+
+    //Formulario para crear un nuevo seguimiento
+    public function create() : view
+    {
+        $user = Auth::user();
+        $grupo = $user->grupo->first();
+        $userName = $user->name;
+        $grupoName = $grupo->nombre;
+        return view('seguimientos.create', compact('grupoName', 'userName'));
+    }
+
+    //GUARDAR EL SEGUIMIENTO
+    public function store(Request $request): RedirectResponse
+        {
+            $user = Auth::user();
+           $grupoId = $user->grupo->first()->id; //Obtener el id del primer grupo del usuario
+    
+            $request->validate([
+                'presentado' => 'required|string',
+                'pendiente' => 'required|string',
+                'fecha' => 'required|date',
+            ]);
+
+            Seguimiento::create([
+               'grupo_id' => $grupoId, //Asignar grupo_id automáticamente
+               'user_id' => $user->id, //Asignar user_id automáticamente
+                'user_id' => Auth::id(),
+                'presentado' => $request->presentado,
+                'pendiente' => $request->pendiente,
+                'fecha' => $request->fecha,
+            ]);
+            
+            return Redirect::route('seguimientos.index')
+                            ->with('success', 'Seguimiento registrado con éxito.');
+        }
+
+
+    //VER DETALLES DE UN SEGUIMIENTO
+    public function show($id): View
+    {
+        $seguimientos = Seguimiento::find($id);
+        return view('seguimientos.show', compact('seguimientos'));
+    }
+
+    //EDITAR SEGUIMIENTO
+    public function  edit($id): View
+    {
+        $user = Auth::user();
+        $seguimientos = Seguimiento::find($id);
+        if (!$seguimientos || $seguimientos->grupo_id !== $user->grupo->first()->id) {
+            return redirect()->route('seguimiento.index')->with('error', 'No tienes permiso para editar este seguimiento.');
+        }
+        return view('seguimientos.edit', compact('seguimientos'));
+        
+    }
+    
+    //ACTUALIZAR SEGUIMIENTO
+    public function update(Request $request, Seguimiento $seguimiento): RedirectResponse
     {
         $user = Auth::user();
 
-        // Verificar si el usuario tiene grupos asociados
-        if (!$user->grupos || $user->grupos->isEmpty()) {
-            return redirect()->route('home')->with('warning', 'No tienes grupos asignados.');
+        // Verifica si el seguimiento pertenece al grupo del usuario
+        if ($seguimiento->grupo_id !== $user->grupo->first()->id) {
+            return redirect()->route('seguimientos.index')->with('error', 'No tienes permiso para actualizar este seguimiento.');
         }
 
-        // Obtener los IDs de los grupos
-        $grupoIds = $user->grupos->pluck('id')->toArray();
-
-        // Obtener los seguimientos relacionados
-        $registros = Seguimiento::whereIn('grupo_id', $grupoIds)->paginate();
-
-        return view('estudiante.seguimiento.index', compact('registros'))
-            ->with('i', ($request->input('page', 1) - 1) * $registros->perPage());
-    }
-
-    /**
-     * Mostrar los seguimientos asociados a los grupos del docente.
-     */
-    public function indexDocente(Request $request): View
-    {
-        $docente = Auth::user();
-
-        // Obtener los seguimientos relacionados con los grupos del docente
-        $registros = Seguimiento::with('user', 'grupo')
-            ->whereHas('grupo', function ($query) use ($docente) {
-                $query->where('docente_id', $docente->id);
-            })
-            ->paginate();
-
-        return view('docente.seguimiento.index', compact('registros'))
-            ->with('i', ($request->input('page', 1) - 1) * $registros->perPage());
-    }
-
-    /**
-     * Crear un nuevo seguimiento.
-     */
-    public function create(Request $request): View|RedirectResponse
-    {
-        $grupo_id = $request->input('grupo_id');
-        $user = Auth::user();
-
-        // Verificar si ya existe un seguimiento para la misma fecha
-        if ($this->hasDuplicateRecord($grupo_id, $request->input('fecha'))) {
-            return Redirect::back()->with('warning', 'Ya existe un seguimiento para esta fecha.');
-        }
-
-        $seguimiento = new Seguimiento();
-
-        return view('estudiante.seguimiento.create', compact('seguimiento', 'grupo_id', 'user'));
-    }
-
-    /**
-     * Verifica si ya existe un seguimiento para la misma fecha y grupo.
-     */
-    public function hasDuplicateRecord($grupoId, $fecha): bool
-    {
-        return Seguimiento::where('grupo_id', $grupoId)
-            ->where('fecha', $fecha)
-            ->exists();
-    }
-
-    /**
-     * Almacenar un seguimiento.
-     */
-    public function storeEstudiante(Request $request): RedirectResponse
-    {
+        // Validar los datos
         $request->validate([
-            'grupo_id' => 'required|exists:grupos,id',
-            'fecha' => 'required|date',
             'presentado' => 'required|string',
             'pendiente' => 'required|string',
-        ]);
-
-        $seguimiento = Seguimiento::create([
-            'user_id' => Auth::id(),
-            'grupo_id' => $request->input('grupo_id'),
-            'fecha' => $request->input('fecha'),
-            'presentado' => $request->input('presentado'),
-            'pendiente' => $request->input('pendiente'),
-        ]);
-
-        return Redirect::route('estudiante.seguimiento.index')
-            ->with('success', 'Seguimiento registrado exitosamente.');
-    }
-
-    /**
-     * Mostrar un seguimiento específico al docente.
-     */
-    public function showRegistro($id): View
-    {
-        $registro = Seguimiento::where('id', $id)
-            ->whereHas('grupo', function ($query) {
-                $query->where('docente_id', Auth::id());
-            })
-            ->firstOrFail();
-
-        return view('docente.seguimiento.show', compact('registro'));
-    }
-
-    /**
-     * Editar un seguimiento.
-     */
-    public function edit($id): View
-    {
-        $seguimiento = Seguimiento::find($id);
-
-        // Validar que el seguimiento pertenece al usuario o grupo autorizado
-        if (!$seguimiento || $seguimiento->user_id !== Auth::id()) {
-            abort(403, 'No estás autorizado para editar este seguimiento.');
-        }
-
-        return view('estudiante.seguimiento.edit', compact('seguimiento'));
-    }
-
-    /**
-     * Actualizar un seguimiento.
-     */
-    public function update(Request $request, $id): RedirectResponse
-    {
-        $request->validate([
             'fecha' => 'required|date',
-            'presentado' => 'required|string',
-            'pendiente' => 'required|string',
         ]);
 
-        $seguimiento = Seguimiento::find($id);
+        // Actualizar el seguimiento
+        $seguimiento->update([
+            'presentado' => $request->presentado,
+            'pendiente' => $request->pendiente,
+            'fecha' => $request->fecha,
+        ]);
 
-        if (!$seguimiento || $seguimiento->user_id !== Auth::id()) {
-            abort(403, 'No estás autorizado para actualizar este seguimiento.');
-        }
-
-        $seguimiento->update($request->all());
-
-        return Redirect::route('estudiante.seguimiento.index')
-            ->with('success', 'Seguimiento actualizado exitosamente.');
+        return Redirect::route('seguimientos.index')->with('success', 'Seguimiento actualizado con éxito.');
     }
 
-    /**
-     * Eliminar un seguimiento.
-     */
+
+    //ELIMINAR SEGUIMIENTO
     public function destroy($id): RedirectResponse
     {
-        $seguimiento = Seguimiento::find($id);
-
-        if (!$seguimiento || $seguimiento->user_id !== Auth::id()) {
-            abort(403, 'No estás autorizado para eliminar este seguimiento.');
-        }
-
-        $seguimiento->delete();
-
-        return Redirect::route('estudiante.seguimiento.index')
-            ->with('success', 'Seguimiento eliminado exitosamente.');
+        Seguimiento::find($id)->delete();
+        return Redirect::route('seguimientos.index')->with('success', 'Seguimiento eliminado con éxito.');
     }
 }

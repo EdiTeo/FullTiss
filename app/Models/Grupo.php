@@ -15,7 +15,11 @@ class Grupo extends Model
         'nombre',
         'descripcion',
         //'solvencia_tecnica',
+<<<<<<< HEAD
        // 'boleta_garantia',
+=======
+        //'boleta_garantia',
+>>>>>>> 6cabe515b7fe6d0ccd6964b0b1f151e9d8d288e9
         'estado',
     ];
 
@@ -37,10 +41,34 @@ class Grupo extends Model
     }
 
 
+<<<<<<< HEAD
     public function entregas() { return $this->hasMany(Entrega::class); }
+=======
+    public function entregas() { 
+        return $this->hasMany(Entrega::class); 
+    }
+
+>>>>>>> 6cabe515b7fe6d0ccd6964b0b1f151e9d8d288e9
     public function seguimientos()
     {
         return $this->hasMany(Seguimiento::class);
     }
+<<<<<<< HEAD
+=======
+    public function sprints()
+{
+    return $this->hasMany(Sprint::class);
+}
+
+
+    public function crossevaluations() { 
+        return $this->hasMany(Crossevaluation::class); 
+    }
+
+    public function crossevaluationsReceived() { 
+        return $this->hasMany(Crossevaluation::class, 'grupo_calificado_id'); 
+    }
+
+>>>>>>> 6cabe515b7fe6d0ccd6964b0b1f151e9d8d288e9
 
 }

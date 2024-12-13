@@ -19,7 +19,11 @@
                             <th>Grupo</th>
                             <th>Integrantes</th>
                             <th>Estado</th>
+<<<<<<< HEAD
                             <!--<th>Archivos</th>--> 
+=======
+                           <!--<th>Archivos</th>--> 
+>>>>>>> 6cabe515b7fe6d0ccd6964b0b1f151e9d8d288e9
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -39,7 +43,11 @@
                                         {{ $grupo->estado ? 'Activo' : 'Inactivo' }}
                                     </span>
                                 </td>
+<<<<<<< HEAD
                                <!---
+=======
+                                  <!---
+>>>>>>> 6cabe515b7fe6d0ccd6964b0b1f151e9d8d288e9
                              <td>
                                     @if($grupo->solvencia_tecnica)
                                         <a href="{{ asset('storage/' . $grupo->solvencia_tecnica) }}" target="_blank" class="text-primary">Descargar Solvencia Técnica</a><br>
@@ -54,10 +62,10 @@
                                     <form action="{{ route('grupos.updateStatus', $grupo->id) }}" method="POST">
                                         @csrf
                                         @method('PATCH')
-                                        <button type="submit" class="btn btn-primary btn-sm">Cambiar Estado</button>
-                                        <a href="{{ route('grupos.verEntregas', $grupo->id) }}" class="btn btn-secondary btn-sm">Historial</a>
+                                        <button type="submit" class="btn btn-danger btn-sm">Cambiar Estado</button>
+                                        <a href="{{ route('grupos.verEntregas', $grupo->id) }}" class="btn btn-secondary btn-sm">Ver entregas</a>
                                         <!-- Botón de Seguimiento de Calificaciones -->
-                                        <a href="{{ route('grupos.verCalificaciones', $grupo->id) }}" class="btn btn-info btn-sm">Seguimiento</a>
+                                        <a href="{{ route('grupos.verCalificaciones', $grupo->id) }}" class="btn btn-info btn-sm">Ver Planilla</a>
                                     </form>
                                 </td>
                             </tr>

@@ -38,7 +38,11 @@
                                     @endforeach
                                 </div>
                             </div>
+<<<<<<< HEAD
                             <!--
+=======
+                             <!--
+>>>>>>> 6cabe515b7fe6d0ccd6964b0b1f151e9d8d288e9
                             <div class="mb-3">
                                 <label for="solvencia_tecnica" class="form-label">Solvencia Técnica (PDF)</label>
                                 <input type="file" name="solvencia_tecnica" required class="form-control">
