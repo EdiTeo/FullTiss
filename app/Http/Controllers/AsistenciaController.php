@@ -39,6 +39,8 @@ class AsistenciaController extends Controller
     {
         $grupo = Grupo::findOrFail($grupoId);
         $request->validate([
+            'fechas' => 'required|array',
+            'fechas.*' => 'required|date',
             'asistencias' => 'required|array',
             'asistencias.*' => 'required|in:presente,retraso,ausente_justificado,ausente_no_justificado',
             'justificaciones' => 'nullable|array',
@@ -50,7 +52,7 @@ class AsistenciaController extends Controller
                 [
                     'user_id' => $userId,
                     'grupo_id' => $grupoId,
-                    'fecha' => now()->toDateString(),
+                    'fecha' => $request->fechas[$userId],
                 ],
                 [
                     'estado' => $estado,
@@ -58,8 +60,34 @@ class AsistenciaController extends Controller
                 ]
             );
         }
-
+    
         return redirect()->route('grupos.verCalificaciones', $grupoId)->with('success', 'Asistencia registrada correctamente.');
     }
+    
+    public function registrarAsistenciaIndividual(Request $request, $grupoId, $userId)
+    {
+        $grupo = Grupo::findOrFail($grupoId);
+        $request->validate([
+            'fecha' => 'required|date',
+            'estado' => 'required|in:presente,retraso,ausente_justificado,ausente_no_justificado',
+            'justificacion' => 'nullable|string|max:255',
+        ]);
+    
+        Asistencia::updateOrCreate(
+            [
+                'user_id' => $userId,
+                'grupo_id' => $grupoId,
+                'fecha' => $request->fecha,
+            ],
+            [
+                'estado' => $request->estado,
+                'justificacion' => $request->justificacion,
+            ]
+        );
+    
+        return redirect()->route('grupos.verCalificaciones', $grupoId)->with('success', 'Asistencia registrada correctamente.');
+    }
+    
+
 
 }

@@ -25,7 +25,7 @@ use App\Http\Controllers\SeguimientoController;
 use App\Http\Controllers\SelfevaluationController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 Route::middleware([
@@ -153,6 +153,7 @@ Route::resource('evaluations', EvaluationController::class);
 
         Route::get('mis-calificaciones', [QualificationController::class, 'verMisCalificaciones'])->name('qualifications.mis');
     
+        Route::post('asistencias/guardar/{grupoId}/{userId}', [AsistenciaController::class, 'registrarAsistenciaIndividual'])->name('asistencias.guardarIndividuo');
 
 });
  //SOLO PARA EL SEGUIMIENTO O MODULO REQUERIMIENTO 8 C*
